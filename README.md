@@ -158,5 +158,120 @@
   })
   ```
 
+- 怎么选中长度不同的单词
+    ```
+      <li>me1</li>
+      <li>hello1</li>
+      <li>default1</li>
+      <li>mistakes1</li>
+      <li>you1</li>
+    ```
+  + mac上是shift + option + 右方向键 
+  + 注意不是command + shift + 右方向键
+- 怎么选中对不齐的标签里面的长度不同的单词
+   ```
+     <li>me1</li>
+    <li>hello1</li>
+  <li>default1</li>
+     <li>mistakes1</li>
+  <li>you1</li>
+   ```
+   + 第一步是选中<li>这个标签，
+   + ====> command + d 
+   + ====> 松开command + d,按右方向键
+   + ====> 再按住shift + option + 右方向键
 
+- callback是不是相当于函数的自调用
+  + 并不是。函数也是一种数据类型，既可以当做参数进行传递，也可以当做方法的返回值。
+
+- 异步编程
+  + 不成立的情况：
+    ```
+      // function add(x,y){
+      //   console.log(1) => 1
+      //   setTimeout(function(){
+      //     console.log(2) => 2
+      //     var ret = x + y
+      //     return ret =>这里不可能拿到这个返回值
+      //   },1000)
+      //   console.log(3) => 3
+            //到这里执行就结束了，不会等到前面的定时器，所以直接就返回了默认值undefined
+      // }
+      // console.log(add(10,20))  => undefined
+
+      // 执行结果：
+      // 1
+      // 3
+      // undefined
+      // 2
+
+    ``` 
+  + 不成立的情况：
+    ```
+    function add(x,y){
+       var ret
+       console.log(1)
+      setTimeout(function(){
+        console.log(2)
+        return x+y
+       },1000)
+      console.log(3)
+     return ret
+    }
+    console.log(add(10,20))
+    ```
+- 回调函数
+  ```
+        function add(x,y,callback){
+
+        //callback就是回调函数
+        //var x = 10
+        //var y = 20
+        //var callback = function(ret){console.log(ret)}
+
+
+        console.log(1)
+        setTimeout(function(){
+          var ret = x + y
+          callback(ret)  ==> 获取回调函数中的返回值
+
+        },1000)
+      }
+
+      add(10,20,function(ret){
+         //现在拿到这个结果可以做任何操作 
+      })
+  ```
++ 基于原生XMLHttpRequest封装get方法
+   ```
+   function get(url, callback){
+      var oReq = new XMLHttpRequest()
+      oReq.onload = function(){
+        callback(oReq.responseText)
+      }
+      oReq.open('get', url, true)
+      oReq.send()
+    }
+
+    get('data.json', function(data){
+      console.log(data)
+    })
+   ```
++ javascript天生不支持模块化
+  + require
+  + exports
+  + Node.js才有的
+- 在浏览器中也可以像在Node中的模块一样来进行编程
+  + require.js 第三方库  AMD
+  + sea.js     第三方库  CMD
++ 在Node这个环境中对JavaScript进行了特殊的模块化支持CommonJS
+  + 无论是CommonJS,AMD,CMD,UMD,EcmaScript 6 Modules官方规范，都是为了解决js的模块化问题
+  + 开发人员为了在不同的环境下使用不同的Javascript模块化解决方案，就弄了很多种第三方库
+  + 在2015年时候，EcmaScript就发布了官方的标准，这样子语言天生就支持了
+  + 虽然标准已经发布了，但是很多javascript运行时还不支持，Node也是只在8.5的版本后才对Ecmascript 6 module进行了支持
+  + 学习vue的时候会去学习
++ 目前前端都是使用新技术，然后利用编译器工具打包可以在低版本的浏览器运行
+  + 使用新技术的目的是为了提高效率，增加可维护性
+  + less编译器 ==> css
+  + Ecmascropt 6 ===> 编译器 ====> ECMASCRIPT 5
 
