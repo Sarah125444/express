@@ -274,4 +274,31 @@
   + 使用新技术的目的是为了提高效率，增加可维护性
   + less编译器 ==> css
   + Ecmascropt 6 ===> 编译器 ====> ECMASCRIPT 5
++ package.json和package-lock.json
+  + npm5以前是不会有package-lock.json这个文件的
+  + npm5以后才加入了这个文件
+  + 当你安装或者更新package-lock.json这个文件
+    + npm5以后的版本安装包不需要加--save参数
+    + 当你安装包的时候会自动创建或者更新package-lock.json这个文件
+    + package-lock.json这个文件会保存node_modules中所有包的信息（版本，下载地址）
+    + 这样的话重新npm install的时候速度就会提升
+  + package-lock.json这个文件的另外一个作用是锁定版本号，防止自动升级
+
++ 在Express中怎么判断页面不存在的情况
+  + express对没有设定的请求路径，默认会返回 can not get XXX
+  + 如果想要定制这个404，需要通过中间件来配置
+  + 只需要在自己的路由之后增加一个
+      ```
+      app.use(function(req,res){
+        //所有未处理的请求路径都会跑到这里
+        //404
+      })
+      ```
+- 回调函数
+   + 异步编程
+   + 如果需要得到一个函数内部异步操作的结果，这个时候必须通过回调函数来获取
+   + 在调用的位置传递一个函数进来
+   + 在封装的函数内部调用传递进来的函数
+- find,findIndex,forEach
+   + 都是数组的遍历方法，都是对函数作为参数的一种运用
 
